@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TEL Construcciones .SPA</title>
+    <link rel="stylesheet" href="../static/css/style.admin_profile.css">
+    <link rel="stylesheet" href="../static/css/style.buscador.css">
+    <script src="../static/js/Buscador.js"></script> 
+</head>
+
+<body>
+    <div class="page">
+        <div class="Bienvenido">
+            <h1>Bienvenido, {{ username }}</h1>
+        </div>
+        <div class="menu">
+            <img src="{{ url_for('static', filename='img/img1.png') }} " alt="logo" width="200px" height="200px">
+            <a href="/logout">Cerrar sesión</a>
+        </div>
+        <div class="Listado">
+            <h2>Lista de trabajadores:</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>RUT</th>
+                        <th>Nombre</th>
+                        <th>Sexo</th>
+                        <th>Cargo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trabajador in trabajadores %}
+                    <tr>
+                        <td>{{ trabajador.rut }}</td>
+                        <td>{{ trabajador.nombre }}</td>
+                        <td>{{ trabajador.sexo }}</td>
+                        <td>{{ trabajador.cargo }}</td>
+                        <td>
+                            <form action="/admin_delete/{{ trabajador._id }}" method="POST">
+                                <input type="hidden" name="user_id" value="{{ trabajador.user_id }}">
+                                <input type="submit" value="Eliminar">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="Trabajadores">
+            <h3>Agregar nuevo trabajador:</h3>
+            <form action="/admin_add" method="POST">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required><br><br>
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" required><br><br>
+                <label for="rut">RUT:</label>
+                <input type="text" id="rut" name="rut" required pattern="\d{2}\.\d{3}\.\d{3}-\d{1}" title="El formato del RUT debe ser 11.111.111-1" maxlength="12"><br><br>
+                <label for="sexo">Sexo:</label>
+                <select id="sexo" name="sexo" required>
+                    <option value="Maculino">Maculino</option>
+                    <option value="Femenino">Femenino</option>
+                </select><br><br>
+                <label for="cargo">Cargo:</label>
+                <select id="cargo" name="cargo" required>
+                    <option value="Recursos Humanos">Recursos Humanos</option>
+                    <option value="Ingeniero Civil">Ingeniero Civil</option>
+                    <option value="Arquitecto">Arquitecto</option>
+                    <option value="Jefe de Obra">Jefe de Obra</option>
+                    <option value="Técnico en Construcción">Técnico en Construcción</option>
+                    <option value="Encargado de Adquisiciones">Encargado de Adquisiciones</option>
+                    <option value="Coordinador de Seguridad">Coordinador de Seguridad</option>
+                </select><br><br>
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" required><br><br>
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" required><br><br>
+                <label for="fecha_ingreso">Fecha de ingreso:</label>
+                <input type="date" id="fecha_ingreso" name="fecha_ingreso" required><br><br>
+                <label for="area">Área:</label>
+                <input type="text" id="area" name="area" required><br><br>
+                <label for="departamento">Departamento:</label>
+                <input type="text" id="departamento" name="departamento" required><br><br>
+                <label for="sueldo">Sueldo:</label>
+                <input type="text" id="sueldo" name="sueldo" required><br><br>
+                <p>ingresa datos de contacto emergencia</p><br>
+                <label for="contacto_emergencia">Nombre:</label>
+                <input type="text" id="contacto_emergencia" name="contacto_emergencia" required><br><br>
+                <label for="telefono_emergencia">Telefono:</label>
+                <input type="text" id="telefono_emergencia" name="telefono_emergencia" required><br><br>
+                <label for="direccion_emergencia">direccion:</label>
+                <input type="text" id="direccion_emergencia" name="direccion_emergencia" required><br><br>
+                <p>ingresa datos de carga familiar</p><br>
+                <label for="carga_nombre">Nombre de la persona:</label>
+                <input type="text" id="carga_nombre" name="carga_nombre" required><br><br>
+                <label for="edad_carga">Edad:</label>
+                <input type="text" id="edad_carga" name="edad_carga" required><br><br>
+                <label for="relacion">Parentesco:</label>
+                <input type="text" id="relacion" name="relacion" required><br><br>
+                <h3>Agregar contraseña de usuario:</h3>
+                <label for="password">Contraseña:</label>
+                <input type="password" id="password" name="password" required><br><br>
+                <label for="rol">Rol:</label>
+                <select id="rol" name="rol" required>
+                    <option value="admin">Admin</option>
+                    <option value="trabajador">Trabajador</option>
+                </select><br><br>
+                <input type="submit" value="Agregar usuario">
+                
+                
+            </form>
+
+                
+        </div>
+         <!-- admin_profile.html -->
+        <div class="SolicitudesPendientes">
+            <h3>Solicitudes de Permiso Pendientes:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Trabajador</th>
+                        <th>Fecha</th>
+                        <th>Motivo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trabajador in trabajadores %}
+                    {% for solicitud in trabajador.solicitudes_permiso %}
+                    {% if solicitud.estado == 'pendiente' %}
+                    <tr>
+                        <td>{{ trabajador.nombre }} {{ trabajador.apellido }}</td>
+                        <td>{{ solicitud.fecha }}</td>
+                        <td>{{ solicitud.motivo }}</td>
+                        <td>{{ solicitud.estado }}</td>
+                        <td>
+                            <form action="/aprobar_solicitud/{{ trabajador._id }}/{{ loop.index0 }}" method="POST">
+                                <input type="submit" value="Aprobar">
+                            </form>
+                            <form action="/denegar_solicitud/{{ trabajador._id }}/{{ loop.index0 }}" method="POST">
+                                <input type="submit" value="Denegar">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="div5">
+            <div class="input-group mb-5">
+                <input type="search" class="form-control" placeholder="Buscar (Por Defecto: Nombre, RUT, Cargo o Sexo.)" id="myinput" onkeyup="search();" name="search_term">
+
+            </div>
+            <div class="container table-responsive">
+                <table class="table table-bordered" id="mytable">
+                    <thead>
+                        <tr>
+                            <th>RUT</th>
+                            <th>Nombre</th>
+                            <th>Sexo</th>
+                            <th>Cargo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for trabajador in trabajadores %}
+                        <tr>
+                            <td>{{ trabajador.rut }}</td>
+                            <td>{{ trabajador.nombre }}</td>
+                            <td>{{ trabajador.sexo }}</td>
+                            <td>{{ trabajador.cargo }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </table>
+            </div>
+        </div>
+        
+        
+
+        
+    </div>
+</body>
+</html>

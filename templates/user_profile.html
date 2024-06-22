@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TEL Construcciones .SPA</title>
+    <link rel="stylesheet" href="../static/css/style.user_profile.css">
+</head>
+<body>
+    <div class="page">
+        <div class="Bienvenido">
+            <h1>Bienvenido, {{ username }}</h1>
+        </div>
+        <div class="menu">
+            <img src="{{ url_for('static', filename='img/img1.png') }} " alt="logo" width="200px" height="200px">
+            <a href="/logout">Cerrar sesión</a>
+        </div>
+        <div class="Informacion">
+            <h2>Mi información:</h2>
+            <ul>
+                <li><strong>Nombre:</strong> {{ trabajador.nombre }}</li>
+                <li><strong>RUT:</strong> {{ trabajador.rut }}</li>
+                <li><strong>Cargo:</strong> {{ trabajador.cargo }}</li>
+                <li><strong>Departamento:</strong> {{ trabajador.departamento }}</li>
+                <h3>carga familiar</h3>
+                <li><strong>Nombre de carga familiar: </strong>{{ trabajador.carga_nombre}}</li>
+                <li><strong>Edad de carga familiar: </strong>{{trabajador.edad_carga}}</li>
+                <li><strong>parentezco familiar: </strong>{{trabajador.relacion}}</li>
+                <h3>Contactos de emergencia</h3>
+                <li><strong>Nombre: </strong>{{trabajador.contacto_emergencia}}</li>
+                <li><strong>telefono: </strong>{{trabajador.telefono_emergencia}}</li>
+                <li><strong>direccion: </strong>{{trabajador.direccion_emergencia}}</li>
+                <h3>datos de contacto</h3>
+                <li><strong>direccion: </strong>{{trabajador.direccion}}</li>
+                <li><strong>telefono: </strong>{{trabajador.telefono}}</li>
+
+            </ul>
+        </div>
+        <div class="Update">
+            <form action="/user_update" method="POST">
+                <h2>Mis datos:</h2>
+                <h3>Datos personales:</h3>
+                <h4>Cargas familiares:</h4>
+                <label for="carga_nombre">nombre de carga familiar:</label>
+                <input type="text" id="carga_nombre" name="carga_nombre" value="{{ trabajador.carga_nombre }}"><br><br>
+        
+                <label for="edad_carga">edad de carga familiar:</label>
+                <input type="text" id="edad_carga" name="edad_carga" value="{{ trabajador.edad_carga }}"><br><br>
+        
+                <label for="relacion">parentesco de carga familiar:</label>
+                <input type="text" id="relacion" name="relacion" value="{{ trabajador.relacion }}"><br><br>
+                
+                <h4>Contactos de emergencia:</h4>
+                <label for="contacto_emergencia">Nombre de contacto:</label>
+                <input type="text" id="contacto_emergencia" name="contacto_emergencia" value="{{ trabajador.contacto_emergencia }}"><br><br>
+                
+                <label for="telefono_emergencia">Teléfono de contacto:</label>
+                <input type="text" id="telefono_emergencia" name="telefono_emergencia" value="{{ trabajador.telefono_emergencia }}"><br><br>
+                
+                <label for="direccion_emergencia">Dirección de contacto:</label>
+                <input type="text" id="direccion_emergencia" name="direccion_emergencia" value="{{ trabajador.direccion_emergencia }}"><br><br>
+                
+                <h4>Datos de contacto:</h4>
+                <label for="direccion">Dirección:</label>
+                <input type="text" id="direccion" name="direccion" value="{{ trabajador.direccion }}"><br><br>
+                
+                <label for="telefono">Teléfono:</label>
+                <input type="text" id="telefono" name="telefono" value="{{ trabajador.telefono }}"><br><br>
+            
+                <input type="submit" value="Guardar cambios">
+            </form>   
+            <h3>Enviar Solicitud de Permiso:</h3>
+            <form action="/enviar_solicitud" method="POST">
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" name="fecha" required><br><br>
+                <label for="motivo">Motivo:</label>
+                <input type="text" id="motivo" name="motivo" required><br><br>
+                <input type="submit" value="Enviar Solicitud">
+            </form>     
+        </div>
+
+        
+
+ 
+    </div>        

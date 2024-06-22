@@ -1,0 +1,10 @@
+<tbody>
+    {% for trabajador in trabajadores %}
+    <tr>
+        <td>{{ trabajador.rut }}</td>
+        <td>{{ trabajador.nombre }}</td>
+        <td>{{ trabajador.sexo }}</td>
+        <td>{{ trabajador.cargo }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
