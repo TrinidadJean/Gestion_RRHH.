@@ -7,7 +7,7 @@ app = Flask(__name__)
 app.secret_key = 'QAZWSXEDCRFVTGBYHNUJMIKOLP'
 
 # Configura la conexión con MongoDB
-client = MongoClient('mongodb+srv://desarrollo2023:rFtSer5m5UVVuoYI@millenium.pardqk8.mongodb.net/')
+client = MongoClient('mongodb+srv://desarrollo2023:assssdwwwwq@millenium.pardqk8.mongodb.net/')
 db = client['millenium']
 user_collection = db['users']
 trabajadores_collection = db['trabajadores']
