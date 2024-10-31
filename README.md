@@ -1,0 +1,1 @@
+It is a web application that allows you to enter through selected users belonging to the company, it can be used locally, in the cloud and link in a business way with emails, in the company it send…
